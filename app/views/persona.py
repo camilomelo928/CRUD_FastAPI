@@ -42,3 +42,8 @@ class PersonaRead(BaseModel):
     created_at: datetime
 
     model_config = {"from_attributes": True}
+
+class PoblarRequest(BaseModel):
+    """Schema for populating database with fake data."""
+    cantidad: int = Field(ge=1, le=1000, description="Cantidad de registros a generar (1-1000)")
+    

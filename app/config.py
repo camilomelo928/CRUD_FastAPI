@@ -5,8 +5,5 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Default to local MySQL database (adjust in your .env)
-DATABASE_URL: str = os.getenv(
-    "DATABASE_URL",
-    "mysql+pymysql://user:password@localhost:3306/fastapi_demo",
-)
-IS_SQLITE: bool = DATABASE_URL.startswith("sqlite")
+DATABASE_URL: str = "mysql+pymysql://root:Popololo928.@127.0.0.1:3306/fastapi_demo?charset=utf8mb4"
+IS_SQLITE: bool = False
