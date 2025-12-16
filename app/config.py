@@ -1,9 +1,9 @@
-import os
-from dotenv import load_dotenv
+﻿from pydantic_settings import BaseSettings
 
-# Load environment variables from .env if present
-load_dotenv()
+class Settings(BaseSettings):
+    DATABASE_URL: str = "mysql+pymysql://usuario:[CONFIGURE_ENV]@localhost:3306/fastapi_demo?charset=utf8mb4"
+    
+    class Config:
+        env_file = ".env"
 
-# Default to local MySQL database (adjust in your .env)
-DATABASE_URL: str = "mysql+pymysql://root:Popololo928.@127.0.0.1:3306/fastapi_demo?charset=utf8mb4"
-IS_SQLITE: bool = False
+settings = Settings()
