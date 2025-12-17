@@ -237,6 +237,61 @@ def obtener_estadisticas_edad(db: Session = Depends(get_db)):
             status_code=500,
             detail=f"Error al calcular estadísticas de edad: {str(e)}"
         )
+@router.get("/buscar/{termino}", response_model=List[PersonaRead])
+def buscar_personas(
+    termino: str,
+    db: Session = Depends(get_db),
+    skip: int = Query(0, ge=0),
+    limit: int = Query(100, ge=1, le=1000)
+):
+    """
+    Busca personas por término en first_name, last_name o email.
+    
+    - Realiza búsqueda OR entre los campos
+    - No distingue entre mayúsculas y minúsculas (case-insensitive)
+    - Usa paginación
+    
+    Args:
+        termino: Término a buscar (ej: "lopez", "juan", "gmail.com")
+        skip: Número de registros a omitir (para paginación)
+        limit: Límite de resultados por página (máx 1000)
+    
+    Returns:
+        Lista de personas que coinciden con el término
+    
+    Ejemplos:
+        GET /personas/buscar/lopez
+        GET /personas/buscar/juan
+        GET /personas/buscar/gmail.com
+        GET /personas/buscar/lopez?skip=10&limit=50
+    
+    Respuestas:
+        200: Lista de personas (puede estar vacía)
+        500: Error interno del servidor
+    """
+    try:
+        from sqlalchemy import or_
+        from ..models.persona import Persona
+        
+        # Para MySQL: usar LIKE con LOWER para case-insensitive
+        termino_busqueda = f"%{termino.lower()}%"
+        
+        # Realizar búsqueda OR en los tres campos (case-insensitive)
+        resultados = db.query(Persona).filter(
+            or_(
+                Persona.first_name.like(termino_busqueda),
+                Persona.last_name.like(termino_busqueda),
+                Persona.email.like(termino_busqueda)
+            )
+        ).offset(skip).limit(limit).all()
+        
+        return resultados
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error en la búsqueda: {str(e)}"
+        )
 @router.get("/{persona_id}", response_model=PersonaRead)
 def get_persona(persona_id: int, db: Session = Depends(get_db)):
     """Retrieve a Persona by ID via service layer."""

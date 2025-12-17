@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "FastAPI Personas CRUD",
-    "description": "API para gestión de personas",
+    "description": "API para gestión de personas con búsqueda",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -10,13 +10,7 @@
       "request": {
         "method": "GET",
         "header": [],
-        "url": {
-          "raw": "http://127.0.0.1:8000/health",
-          "protocol": "http",
-          "host": ["127.0.0.1"],
-          "port": "8000",
-          "path": ["health"]
-        }
+        "url": "http://127.0.0.1:8000/health"
       }
     },
     {
@@ -24,13 +18,7 @@
       "request": {
         "method": "GET",
         "header": [],
-        "url": {
-          "raw": "http://127.0.0.1:8000/personas",
-          "protocol": "http",
-          "host": ["127.0.0.1"],
-          "port": "8000",
-          "path": ["personas"]
-        }
+        "url": "http://127.0.0.1:8000/personas"
       }
     },
     {
@@ -47,13 +35,7 @@
           "mode": "raw",
           "raw": "{\n  \"first_name\": \"Juan\",\n  \"last_name\": \"Pérez\",\n  \"email\": \"juan@example.com\",\n  \"birth_date\": \"1990-05-15\"\n}"
         },
-        "url": {
-          "raw": "http://127.0.0.1:8000/personas",
-          "protocol": "http",
-          "host": ["127.0.0.1"],
-          "port": "8000",
-          "path": ["personas"]
-        }
+        "url": "http://127.0.0.1:8000/personas"
       }
     },
     {
@@ -70,13 +52,7 @@
           "mode": "raw",
           "raw": "{\n  \"cantidad\": 50\n}"
         },
-        "url": {
-          "raw": "http://127.0.0.1:8000/personas/poblar",
-          "protocol": "http",
-          "host": ["127.0.0.1"],
-          "port": "8000",
-          "path": ["personas", "poblar"]
-        }
+        "url": "http://127.0.0.1:8000/personas/poblar"
       }
     },
     {
@@ -84,13 +60,7 @@
       "request": {
         "method": "GET",
         "header": [],
-        "url": {
-          "raw": "http://127.0.0.1:8000/personas/1",
-          "protocol": "http",
-          "host": ["127.0.0.1"],
-          "port": "8000",
-          "path": ["personas", "1"]
-        }
+        "url": "http://127.0.0.1:8000/personas/1"
       }
     },
     {
@@ -98,13 +68,7 @@
       "request": {
         "method": "DELETE",
         "header": [],
-        "url": {
-          "raw": "http://127.0.0.1:8000/personas/1",
-          "protocol": "http",
-          "host": ["127.0.0.1"],
-          "port": "8000",
-          "path": ["personas", "1"]
-        }
+        "url": "http://127.0.0.1:8000/personas/1"
       }
     },
     {
@@ -112,13 +76,7 @@
       "request": {
         "method": "DELETE",
         "header": [],
-        "url": {
-          "raw": "http://127.0.0.1:8000/personas/reset",
-          "protocol": "http",
-          "host": ["127.0.0.1"],
-          "port": "8000",
-          "path": ["personas", "reset"]
-        }
+        "url": "http://127.0.0.1:8000/personas/reset"
       }
     },
     {
@@ -126,13 +84,7 @@
       "request": {
         "method": "GET",
         "header": [],
-        "url": {
-          "raw": "http://127.0.0.1:8000/personas/estadisticas/dominios",
-          "protocol": "http",
-          "host": ["127.0.0.1"],
-          "port": "8000",
-          "path": ["personas", "estadisticas", "dominios"]
-        }
+        "url": "http://127.0.0.1:8000/personas/estadisticas/dominios"
       }
     },
     {
@@ -140,13 +92,23 @@
       "request": {
         "method": "GET",
         "header": [],
-        "url": {
-          "raw": "http://127.0.0.1:8000/personas/estadisticas/edad",
-          "protocol": "http",
-          "host": ["127.0.0.1"],
-          "port": "8000",
-          "path": ["personas", "estadisticas", "edad"]
-        }
+        "url": "http://127.0.0.1:8000/personas/estadisticas/edad"
+      }
+    },
+    {
+      "name": "Buscar Personas",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "http://127.0.0.1:8000/personas/buscar/lopez"
+      }
+    },
+    {
+      "name": "Buscar Personas con Paginación",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "http://127.0.0.1:8000/personas/buscar/a?skip=0&limit=20"
       }
     }
   ]
