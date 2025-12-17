@@ -111,6 +111,27 @@
           "path": ["personas", "1"]
         }
       }
+    },
+    {
+      "name": "Borrar Todas las Personas (Reset)",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/personas/reset",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8000",
+          "path": ["personas", "reset"]
+        }
+      }
     }
+    
   ]
 }
+  

@@ -1,5 +1,5 @@
 # Python
-__pycache__/
+_pycache_/
 *.py[cod]
 *$py.class
 
@@ -34,3 +34,8 @@ app.db
 
 # Misc course files
 *.pptx
+
+# Config files with credentials
+app/config.py
+config.py
+

@@ -42,11 +42,6 @@ def update_persona(persona_id: int, persona_in: PersonaUpdate, db: Session = Dep
     return persona_service.update_persona(db, persona_id, persona_in)
 
 
-@router.delete("/{persona_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_persona(persona_id: int, db: Session = Depends(get_db)):
-    """Delete a Persona by ID via service layer."""
-    persona_service.delete_persona(db, persona_id)
-    return None
 @router.post("/poblar", response_model=dict, status_code=status.HTTP_201_CREATED)
 def poblar_personas_endpoint(
     request: PoblarRequest,
@@ -110,4 +105,38 @@ def poblar_personas_endpoint(
         raise HTTPException(
             status_code=500,
             detail=f"Error al poblar la base de datos: {str(e)}"
+        ) 
+@router.delete("/reset", response_model=dict)
+def reset_database(db: Session = Depends(get_db)):
+    """
+    Elimina todos los registros de la tabla personas.
+    
+    - *¡CUIDADO!*: Esta operación es irreversible.
+    - Retorna el número de registros eliminados.
+    """
+    try:
+        from ..models.persona import Persona
+        
+        # Contar antes de borrar
+        count = db.query(Persona).count()
+        
+        # Borrar todos los registros
+        db.query(Persona).delete()
+        db.commit()
+        
+        return {
+            "message": "Base de datos limpiada. Se eliminaron todos los registros.",
+            "deleted_count": count
+        }
+        
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error al limpiar la base de datos: {str(e)}"
         )
+@router.delete("/{persona_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_persona(persona_id: int, db: Session = Depends(get_db)):
+    """Delete a Persona by ID via service layer."""
+    persona_service.delete_persona(db, persona_id)
+    return None
