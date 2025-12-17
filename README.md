@@ -22,7 +22,7 @@ Proyecto de demostración con FastAPI + SQLAlchemy y estructura MVC para un CRUD
    # Por defecto: DATABASE_URL=mysql+pymysql://user:password@localhost:3306/fastapi_demo
    ```
 
-3. Ejecutar el servidor:
+3. Ejecutar el servidorr:
    ```bash
    uvicorn app.main:app --reload
    ```
