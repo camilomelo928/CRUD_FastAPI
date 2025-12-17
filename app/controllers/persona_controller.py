@@ -169,6 +169,74 @@ def estadisticas_por_dominio(db: Session = Depends(get_db)):
             status_code=500,
             detail=f"Error al calcular estadísticas: {str(e)}"
         )
+@router.get("/estadisticas/edad")
+def obtener_estadisticas_edad(db: Session = Depends(get_db)):
+    """
+    Calcula estadísticas de edad basadas en el campo birth_date de todas las personas.
+    
+    Returns:
+        Dict con edad promedio, mínima y máxima
+        
+    Example response:
+    {
+        "edad_promedio": 34,
+        "edad_minima": 18,
+        "edad_maxima": 85
+    }
+    """
+    try:
+        from datetime import date
+        from ..models.persona import Persona
+        
+        # Obtener todas las personas de la base de datos
+        personas = db.query(Persona).all()
+        
+        if not personas:
+            raise HTTPException(
+                status_code=404,
+                detail="No se encontraron personas en la base de datos"
+            )
+        
+        # Calcular edades
+        edades = []
+        hoy = date.today()
+        
+        for persona in personas:
+            if persona.birth_date:
+                # Calcular edad
+                edad = hoy.year - persona.birth_date.year
+                
+                # Ajustar si aún no ha llegado el cumpleaños este año
+                if (hoy.month, hoy.day) < (persona.birth_date.month, persona.birth_date.day):
+                    edad -= 1
+                
+                edades.append(edad)
+        
+        if not edades:
+            raise HTTPException(
+                status_code=404,
+                detail="No se encontraron personas con fecha de nacimiento válida"
+            )
+        
+        # Calcular estadísticas
+        edad_promedio = round(sum(edades) / len(edades))
+        edad_minima = min(edades)
+        edad_maxima = max(edades)
+        
+        return {
+            "edad_promedio": edad_promedio,
+            "edad_minima": edad_minima,
+            "edad_maxima": edad_maxima
+        }
+        
+    except HTTPException:
+        # Re-lanzar las excepciones HTTP que ya manejamos
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error al calcular estadísticas de edad: {str(e)}"
+        )
 @router.get("/{persona_id}", response_model=PersonaRead)
 def get_persona(persona_id: int, db: Session = Depends(get_db)):
     """Retrieve a Persona by ID via service layer."""

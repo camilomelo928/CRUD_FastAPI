@@ -11,7 +11,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://127.0.0.1:8001/health",
+          "raw": "http://127.0.0.1:8000/health",
           "protocol": "http",
           "host": ["127.0.0.1"],
           "port": "8000",
@@ -25,7 +25,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://127.0.0.1:8001/personas",
+          "raw": "http://127.0.0.1:8000/personas",
           "protocol": "http",
           "host": ["127.0.0.1"],
           "port": "8000",
@@ -45,10 +45,10 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"nombre\": \"Juan\",\n  \"apellido\": \"Pérez\",\n  \"edad\": 30,\n  \"email\": \"juan@example.com\"\n}"
+          "raw": "{\n  \"first_name\": \"Juan\",\n  \"last_name\": \"Pérez\",\n  \"email\": \"juan@example.com\",\n  \"birth_date\": \"1990-05-15\"\n}"
         },
         "url": {
-          "raw": "http://127.0.0.1:8001/personas",
+          "raw": "http://127.0.0.1:8000/personas",
           "protocol": "http",
           "host": ["127.0.0.1"],
           "port": "8000",
@@ -68,12 +68,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"cantidad\": 50\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
+          "raw": "{\n  \"cantidad\": 50\n}"
         },
         "url": {
           "raw": "http://127.0.0.1:8000/personas/poblar",
@@ -90,7 +85,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://127.0.0.1:8001/personas/1",
+          "raw": "http://127.0.0.1:8000/personas/1",
           "protocol": "http",
           "host": ["127.0.0.1"],
           "port": "8000",
@@ -104,7 +99,7 @@
         "method": "DELETE",
         "header": [],
         "url": {
-          "raw": "http://127.0.0.1:8001/personas/1",
+          "raw": "http://127.0.0.1:8000/personas/1",
           "protocol": "http",
           "host": ["127.0.0.1"],
           "port": "8000",
@@ -116,12 +111,7 @@
       "name": "Borrar Todas las Personas (Reset)",
       "request": {
         "method": "DELETE",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
+        "header": [],
         "url": {
           "raw": "http://127.0.0.1:8000/personas/reset",
           "protocol": "http",
@@ -130,7 +120,7 @@
           "path": ["personas", "reset"]
         }
       }
-    },  
+    },
     {
       "name": "Estadísticas por Dominio",
       "request": {
@@ -144,8 +134,20 @@
           "path": ["personas", "estadisticas", "dominios"]
         }
       }
+    },
+    {
+      "name": "Estadísticas de Edad",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/personas/estadisticas/edad",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8000",
+          "path": ["personas", "estadisticas", "edad"]
+        }
+      }
     }
   ]
 }
-    
-  
