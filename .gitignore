@@ -34,3 +34,7 @@ app.db
 
 # Misc course files
 *.pptx
+
+# Config files with credentials
+app/config.py
+config.py
