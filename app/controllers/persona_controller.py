@@ -30,12 +30,6 @@ def list_personas(
     return persona_service.list_personas(db, skip=skip, limit=limit)
 
 
-@router.get("/{persona_id}", response_model=PersonaRead)
-def get_persona(persona_id: int, db: Session = Depends(get_db)):
-    """Retrieve a Persona by ID via service layer."""
-    return persona_service.get_persona(db, persona_id)
-
-
 @router.put("/{persona_id}", response_model=PersonaRead)
 def update_persona(persona_id: int, persona_in: PersonaUpdate, db: Session = Depends(get_db)):
     """Update an existing Persona (partial) via service layer."""
@@ -140,3 +134,42 @@ def delete_persona(persona_id: int, db: Session = Depends(get_db)):
     """Delete a Persona by ID via service layer."""
     persona_service.delete_persona(db, persona_id)
     return None
+@router.get("/estadisticas/dominios")
+def estadisticas_por_dominio(db: Session = Depends(get_db)):
+    """
+    Retorna estadísticas de personas por dominio de correo.
+    
+    - Extrae el dominio de cada email (lo después del @)
+    - Agrupa y cuenta cuántas personas hay por cada dominio
+    
+    Example response:
+    {
+        "gmail.com": 150,
+        "hotmail.com": 80,
+        "yahoo.com": 45
+    }
+    """
+    try:
+        from ..models.persona import Persona
+        
+        # Obtener todas las personas
+        personas = db.query(Persona).all()
+        
+        # Contar por dominio
+        estadisticas = {}
+        for persona in personas:
+            if '@' in persona.email:
+                dominio = persona.email.split('@')[1].lower()
+                estadisticas[dominio] = estadisticas.get(dominio, 0) + 1
+        
+        return estadisticas
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error al calcular estadísticas: {str(e)}"
+        )
+@router.get("/{persona_id}", response_model=PersonaRead)
+def get_persona(persona_id: int, db: Session = Depends(get_db)):
+    """Retrieve a Persona by ID via service layer."""
+    return persona_service.get_persona(db, persona_id)

@@ -111,7 +111,7 @@
           "path": ["personas", "1"]
         }
       }
-    }    ,
+    },
     {
       "name": "Borrar Todas las Personas (Reset)",
       "request": {
@@ -130,7 +130,22 @@
           "path": ["personas", "reset"]
         }
       }
+    },  
+    {
+      "name": "Estadísticas por Dominio",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/personas/estadisticas/dominios",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8000",
+          "path": ["personas", "estadisticas", "dominios"]
+        }
+      }
     }
-    
   ]
 }
+    
+  
