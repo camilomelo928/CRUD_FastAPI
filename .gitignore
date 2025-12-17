@@ -1,5 +1,5 @@
 # Python
-__pycache__/
+_pycache_/
 *.py[cod]
 *$py.class
 
@@ -37,4 +37,9 @@ app.db
 
 # Config files with credentials
 app/config.py
+<<<<<<< HEAD
 config.py
+=======
+config.py
+
+>>>>>>> dcf3342b0e04c6a5160f14a56b0fbe51f9f37a2b
