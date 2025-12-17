@@ -1,0 +1,2 @@
+﻿DATABASE_URL = "mysql+pymysql://usuario:CONTRASEÑA_AQUI@localhost:3306/fastapi_demo?charset=utf8mb4"
+IS_SQLITE = DATABASE_URL.startswith("sqlite")
